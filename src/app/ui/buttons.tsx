@@ -14,7 +14,7 @@ export function GhostButton({ children, className, ...rest }: ButtonProps) {
   return <button className="btn btn-ghost">{children}</button>;
 }
 
-export function IconButton({ children, className, ...rest }: ButtonProps) {
+export function IconButton() {
   return (
     <button className="btn btn-circle btn-outline">
       <svg

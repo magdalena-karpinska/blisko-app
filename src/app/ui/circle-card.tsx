@@ -1,3 +1,5 @@
+import { IconButton } from "./buttons";
+
 type CustomColors =
   | "primary"
   | "base-100"
@@ -29,8 +31,9 @@ export function CircleCard({ text, bgColor }: CardProps) {
 
   return (
     <div className={`card w-full ${bgColorClass}`}>
-      <div className="card-body">
+      <div className="card-body flex flex-row justify-between">
         <h2 className="card-title">{text}</h2>
+        <IconButton />
       </div>
     </div>
   );

@@ -1,34 +1,40 @@
+import { Heading3, Heading1, Paragraph } from "../ui/headings";
 import {
   PrimaryButton,
   SecondaryButton,
   GhostButton,
   IconButton,
   DisabledButton,
-} from "../ui/button";
-import { typography } from "../ui/typography";
+} from "../ui/buttons";
+import { CircleCard } from "../ui/circle-card";
+import { ConnectionCard } from "../ui/connection-card";
 
 export default function designSystem() {
   return (
-    <div>
-      <h1 className={typography.h1}>Design System</h1>
-      <h2 className={typography.h2}>Buttons</h2>
-      <h3 className={typography.h3}>Primary button</h3>
-      <p className={typography.body}>
-        Usage: Submit, SignUp, Send Message, Create Circle
-      </p>
+    <main className="w-full flex flex-col items-center space-y-4 my-8">
+      <Heading1 text="Design System" />
+      <Heading3 text="Buttons" />
+      <Heading3 text="Primary button" />
+      <Paragraph text="Usage: Submit, SignUp, Send Message, Create Circle" />
       <PrimaryButton>Submit</PrimaryButton>
-      <h3 className={typography.h3}>Secondary button</h3>
-      <p className={typography.body}>Usage: Back, Cancel, Edit Profile</p>
+      <Heading3 text="Secondary button" />
+      <Paragraph text="Usage: Back, Cancel, Edit Profile" />
       <SecondaryButton>Cancel</SecondaryButton>
-      <h3 className={typography.h3}>Ghost button</h3>
-      <p className={typography.body}>Usage: Skip, Learn more</p>
+      <Heading3 text="Ghost button" />
+      <Paragraph text="Usage: Skip, Learn more" />
       <GhostButton>Skip</GhostButton>
-      <h3 className={typography.h3}>Icon button</h3>
-      <p className={typography.body}>Usage: Add a connection</p>
+      <Heading3 text="Icon button" />
+      <Paragraph text="Usage: Add a connection" />
       <IconButton>Skip</IconButton>
-      <h3 className={typography.h3}>Disabled button</h3>
-      <p className={typography.body}>Usage: for conditional rendering</p>
+      <Heading3 text="Disabled button" />
+      <Paragraph text="Usage: for conditional rendering" />
       <DisabledButton>Submit</DisabledButton>
-    </div>
+      <Heading3 text="Circle Card" />
+      <Paragraph text="Usage: for connection circles" />
+      <CircleCard text="Family" bgColor={"blue"} />
+      <Heading3 text="Contact Card" />
+      <Paragraph text="Usage: for connections" />
+      <ConnectionCard text="Magdalena Karpinska" />
+    </main>
   );
 }

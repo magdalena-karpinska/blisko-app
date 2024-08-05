@@ -5,7 +5,7 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Bblisko App",
+  title: "Blisko App",
   description: "Not just another social app",
 };
 

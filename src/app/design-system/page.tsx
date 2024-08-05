@@ -8,6 +8,7 @@ import {
 } from "../ui/buttons";
 import { CircleCard } from "../ui/circle-card";
 import { ConnectionCard } from "../ui/connection-card";
+import SearchInput from "../ui/input";
 
 export default function designSystem() {
   return (
@@ -35,6 +36,9 @@ export default function designSystem() {
       <Heading3 text="Contact Card" />
       <Paragraph text="Usage: for connections" />
       <ConnectionCard text="Magdalena Karpinska" />
+      <Heading3 text="Input" />
+      <Paragraph text="Usage: Search input field" />
+      <SearchInput />
     </main>
   );
 }

@@ -20,7 +20,7 @@ export default function RootLayout({
       <body
         className={`${lexend.className} antialiased min-h-screen flex flex-col`}
       >
-        <main className="flex-1 flex flex-col">
+        <main className="flex-1 flex flex-col items-center">
           <Header />
           <Container>{children}</Container>
           <Footer />

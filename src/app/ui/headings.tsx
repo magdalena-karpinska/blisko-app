@@ -19,5 +19,5 @@ export function Heading3({ text }: Props) {
 }
 
 export function Paragraph({ text }: Props) {
-  return <p className="text-base font-normal">{text}</p>;
+  return <p className="text-base font-normal text-gray-500">{text}</p>;
 }

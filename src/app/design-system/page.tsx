@@ -44,7 +44,7 @@ export default function designSystem() {
       <div className="py-8 w-full flex flex-col items-center space-y-4">
         <Heading3 text="Icon button" />
         <Paragraph text="Usage: Add a connection" />
-        <IconButton text="Skip" />
+        <IconButton />
       </div>
 
       <div className="py-8 w-full flex flex-col items-center space-y-4">

@@ -5,7 +5,7 @@ import {
   getAllCircles,
 } from "../lib";
 
-import { Circle } from "../ui";
+import { Circle, SearchInput } from "../ui";
 
 export default function ConnectionsPage() {
   const connectionsInCircles = mockConnections.reduce(
@@ -26,6 +26,7 @@ export default function ConnectionsPage() {
 
   return (
     <main className="w-full flex flex-col items-center space-y-4 my-8">
+      <SearchInput />
       {allCircles.map((circle) => (
         <Circle
           key={circle}

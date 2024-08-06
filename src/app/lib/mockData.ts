@@ -39,5 +39,5 @@ export const mockConnections: Connection[] = [
 ];
 
 export function getAllCircles(): ConnectionsCircle[] {
-  return ["family", "friends", "aquaintances"];
+  return ["aquaintances", "friends", "family"];
 }

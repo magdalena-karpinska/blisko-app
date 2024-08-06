@@ -1,4 +1,4 @@
-import { CircleCard } from "./ui/circle-card";
+import { CircleCard } from "./ui";
 
 export default function Dashboard() {
   return (

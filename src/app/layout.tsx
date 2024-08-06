@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { lexend } from "./ui/fonts";
 import "./globals.css";
 import { Header } from "./ui/header";
-import Container from "./ui/container";
+import { Container } from "./ui";
 import Footer from "./ui/footer";
 
 export const metadata: Metadata = {

@@ -1,4 +1,4 @@
-import { IconButton } from "./buttons";
+import { IconButton } from ".";
 
 type CustomColors =
   | "primary"

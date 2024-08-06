@@ -1,15 +1,17 @@
-import { Heading3, Heading1, Paragraph } from "../ui/headings";
 import {
   PrimaryButton,
   SecondaryButton,
   GhostButton,
   IconButton,
   DisabledButton,
-} from "../ui/buttons";
-import { CircleCard } from "../ui/circle-card";
-import { ConnectionCard } from "../ui/connection-card";
-import SearchInput from "../ui/input";
-import Divider from "../ui/divider";
+  Heading3,
+  Heading1,
+  Paragraph,
+  CircleCard,
+  ConnectionCard,
+  Divider,
+  SearchInput,
+} from "../ui";
 
 export default function designSystem() {
   return (
@@ -42,7 +44,7 @@ export default function designSystem() {
       <div className="py-8 w-full flex flex-col items-center space-y-4">
         <Heading3 text="Icon button" />
         <Paragraph text="Usage: Add a connection" />
-        <IconButton>Skip</IconButton>
+        <IconButton text="Skip" />
       </div>
 
       <div className="py-8 w-full flex flex-col items-center space-y-4">

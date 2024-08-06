@@ -1,6 +1,10 @@
-export function NavBar() {
+type NavBarProps = {
+  bgColor: string;
+};
+
+export function NavBar({ bgColor }: NavBarProps) {
   return (
-    <div className="navbar bg-base-100">
+    <div className={`navbar bg-${bgColor}`}>
       <div className="navbar-start">
         <button className="btn btn-square btn-ghost">
           <svg

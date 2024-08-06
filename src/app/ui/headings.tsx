@@ -18,6 +18,10 @@ export function Heading3({ text }: Props) {
   return <h3 className="text-2xl font-medium">{text}</h3>;
 }
 
+export function Heading5({ text }: Props) {
+  return <h5 className="text-base font-normal">{text}</h5>;
+}
+
 export function Paragraph({ text }: Props) {
   return <p className="text-base font-normal text-gray-500">{text}</p>;
 }

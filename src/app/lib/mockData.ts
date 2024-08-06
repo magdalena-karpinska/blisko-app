@@ -1,4 +1,4 @@
-import { Connection } from ".";
+import { Connection, ConnectionsCircle } from ".";
 
 export const mockConnections: Connection[] = [
   {
@@ -37,3 +37,7 @@ export const mockConnections: Connection[] = [
     circle: "aquaintances",
   },
 ];
+
+export function getAllCircles(): ConnectionsCircle[] {
+  return ["family", "friends", "aquaintances"];
+}

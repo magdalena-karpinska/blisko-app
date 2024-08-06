@@ -1,5 +1,38 @@
-import { ConnectionCard } from "../ui/connection-card";
+import {
+  mockConnections,
+  ConnectionsCircle,
+  Connection,
+  getAllCircles,
+} from "../lib";
 
-export default function AllConnections() {
-  return <ConnectionCard text="Ines Acedo Leventopoulou" />;
+import { Circle } from "../ui";
+
+export default function ConnectionsPage() {
+  const connectionsInCircles = mockConnections.reduce(
+    (acc, connection) => {
+      if (acc[connection.circle]) {
+        acc[connection.circle].push(connection);
+      }
+      return acc;
+    },
+    {
+      family: [],
+      friends: [],
+      aquaintances: [],
+    } as Record<ConnectionsCircle, Connection[]>
+  );
+
+  const allCircles = getAllCircles();
+
+  return (
+    <main className="w-full flex flex-col items-center space-y-4 my-8">
+      {allCircles.map((circle) => (
+        <Circle
+          key={circle}
+          name={circle}
+          connections={connectionsInCircles[circle]}
+        />
+      ))}
+    </main>
+  );
 }

@@ -3,5 +3,5 @@ type DividerProps = {
 };
 
 export function Divider({ text }: DividerProps) {
-  return <div className="divider text-2xl">{text}</div>;
+  return <div className="divider text-1xl w-full">{text}</div>;
 }

@@ -9,3 +9,4 @@ export * from "./fonts";
 export * from "./footer";
 export * from "./input";
 export * from "./nav-bar";
+export * from "./circle";

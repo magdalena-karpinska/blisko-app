@@ -18,7 +18,7 @@ export default function ConnectionsPage() {
     {
       family: [],
       friends: [],
-      aquaintances: [],
+      acquaintances: [],
     } as Record<ConnectionsCircle, Connection[]>
   );
 

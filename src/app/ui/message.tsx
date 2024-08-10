@@ -1,22 +1,46 @@
-export function MyMessage() {
+import { Connection, LoggedInUser } from "../lib";
+
+export type MyMessageProps = {
+  message: string;
+  timestamp: string;
+  loggedInUser: LoggedInUser;
+};
+
+export type TheirMessageProps = {
+  message: string;
+  timestamp: string;
+  user: Connection;
+};
+
+const circleBgColor = {
+  family: "bg-[#FAC357]",
+  friends: "bg-[#FAE39C]",
+  acquaintances: "bg-[#B8E0E3]",
+};
+
+export function MyMessage({
+  message,
+  timestamp,
+  loggedInUser,
+}: MyMessageProps) {
   return (
     <div className="chat chat-end">
       <div className="chat-image avatar">
         <div className="w-10 rounded-full">
-          <img alt="User's avatar" src="/magdalena.webp" />
+          <img alt="User's avatar" src={loggedInUser.avatar} />
         </div>
       </div>
       <div className="chat-header">
-        Magdalena
-        <time className="text-xs opacity-50">12:46</time>
+        {loggedInUser.name}
+        <time className="text-xs opacity-50">{timestamp}</time>
       </div>
-      <div className="chat-bubble">How are you?!</div>
-      <div className="chat-footer opacity-50">Seen at 12:46</div>
+      <div className="chat-bubble bg-[#FC9F66]">{message}</div>
     </div>
   );
 }
 
-export function TheirMessage() {
+export function TheirMessage({ message, timestamp, user }: TheirMessageProps) {
+  const bgColorClass = circleBgColor[user.circle];
   return (
     <div className="chat chat-start">
       <div className="chat-image avatar">
@@ -28,11 +52,10 @@ export function TheirMessage() {
         </div>
       </div>
       <div className="chat-header">
-        Someone
-        <time className="text-xs opacity-50">12:45</time>
+        {user.name}
+        <time className="text-xs opacity-50">{timestamp}</time>
       </div>
-      <div className="chat-bubble">Hej! What's up?</div>
-      <div className="chat-footer opacity-50">Delivered</div>
+      <div className={`chat-bubble ${bgColorClass}`}>{message}</div>
     </div>
   );
 }

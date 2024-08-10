@@ -1,4 +1,8 @@
-export function SearchInput() {
+export type SearchInputProps = TextInputProps & {
+  onSearch?: (value: string) => void;
+};
+
+export function SearchInput({ onSearch, ...props }: SearchInputProps) {
   return (
     <label className="input input-bordered flex items-center gap-2 w-full">
       <input type="text" className="grow" placeholder="Search" />
@@ -15,5 +19,20 @@ export function SearchInput() {
         />
       </svg>
     </label>
+  );
+}
+
+export type TextInputProps = React.InputHTMLAttributes<HTMLInputElement> & {
+  className?: string;
+};
+
+export function TextInput({ className = "", ...props }: TextInputProps) {
+  return (
+    <input
+      type="text"
+      placeholder="Type here"
+      className={`input input-bordered w-full ${className}`}
+      {...props}
+    />
   );
 }

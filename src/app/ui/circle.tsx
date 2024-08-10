@@ -1,5 +1,10 @@
-import { CircleProps } from "../lib";
 import { ConnectionCard, Divider } from ".";
+import { Connection } from "../lib";
+
+export type CircleProps = {
+  name: string;
+  connections: Connection[];
+};
 
 export function Circle({ name, connections }: CircleProps) {
   return (

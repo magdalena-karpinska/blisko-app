@@ -29,15 +29,15 @@ export const mockConnections: Connection[] = [
   {
     id: "6",
     name: "Jonathan Zeray",
-    circle: "aquaintances",
+    circle: "acquaintances",
   },
   {
     id: "6",
     name: "Robin Sahin",
-    circle: "aquaintances",
+    circle: "acquaintances",
   },
 ];
 
 export function getAllCircles(): ConnectionsCircle[] {
-  return ["aquaintances", "friends", "family"];
+  return ["acquaintances", "friends", "family"];
 }

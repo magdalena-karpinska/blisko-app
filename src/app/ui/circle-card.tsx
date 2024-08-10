@@ -33,7 +33,6 @@ export function CircleCard({ text, bgColor }: CardProps) {
     <div className={`card w-full ${bgColorClass}`}>
       <div className="card-body flex flex-row justify-between">
         <h2 className="card-title">{text}</h2>
-        <IconButton />
       </div>
     </div>
   );

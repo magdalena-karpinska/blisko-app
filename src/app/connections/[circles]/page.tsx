@@ -2,7 +2,7 @@
 
 import { useParams } from "next/navigation";
 import { ConnectionsCircle, mockConnections } from "../../lib";
-import { Circle, ConnectionCard, SearchInput } from "../../ui";
+import { ConnectionCard, SearchInput } from "../../ui";
 
 export default function CirclePage() {
   const params = useParams();

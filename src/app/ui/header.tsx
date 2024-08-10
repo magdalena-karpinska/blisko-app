@@ -35,7 +35,7 @@ type RouteConfig = {
 };
 const routeConfigs: Record<string, RouteConfig> = {
   "/": {
-    bgColor: "base-100",
+    bgColor: "primary",
     paragraphText: "Welcome back,",
     headingText: "Magdalena",
   },

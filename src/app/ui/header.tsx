@@ -44,6 +44,21 @@ const routeConfigs: Record<string, RouteConfig> = {
     paragraphText: "connections",
     headingText: "All",
   },
+  "/connections/family": {
+    bgColor: "orange",
+    paragraphText: "connections",
+    headingText: "Family",
+  },
+  "/connections/friends": {
+    bgColor: "lightOrange",
+    paragraphText: "connections",
+    headingText: "Friends",
+  },
+  "/connections/acquaintances": {
+    bgColor: "lightBlue",
+    paragraphText: "connections",
+    headingText: "Acquaintances",
+  },
 };
 
 export function Header() {

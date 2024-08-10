@@ -7,7 +7,7 @@ export type Connection = {
 };
 
 export type Conversation = {
-  conversation_id: string;
+  conversation_id: string | null;
   user2_name: string;
   messages: Message[];
 };
@@ -15,6 +15,13 @@ export type Conversation = {
 export type Message = {
   message_id: string;
   conversation_id: string;
-  sender_id: string;
+  sender_name: string;
   text: string;
+  timestamp: string;
+};
+
+export type LoggedInUser = {
+  id: string;
+  name: string;
+  avatar: string;
 };

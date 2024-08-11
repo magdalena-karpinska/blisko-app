@@ -25,7 +25,7 @@ export default function ConnectionsPage() {
   const allCircles = getAllCircles();
 
   return (
-    <main className="w-full flex flex-col items-center space-y-4 my-8">
+    <>
       <SearchInput />
       {allCircles.map((circle) => (
         <Circle
@@ -34,6 +34,6 @@ export default function ConnectionsPage() {
           connections={connectionsInCircles[circle]}
         />
       ))}
-    </main>
+    </>
   );
 }

@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
-import { lexend } from "./ui/fonts";
+
+import { lexend, Header, Container, Footer } from "./ui";
 import "./globals.css";
-import { Header } from "./ui/header";
-import { Container } from "./ui";
-import Footer from "./ui/footer";
 
 export const metadata: Metadata = {
   title: "Blisko App",
@@ -18,13 +16,11 @@ export default function RootLayout({
   return (
     <html lang="en" h-full>
       <body
-        className={`${lexend.className} antialiased min-h-screen flex flex-col`}
+        className={`${lexend.className} antialiased h-full flex flex-col overflow-hidden`}
       >
-        <main className="flex-1 flex flex-col items-center">
-          <Header />
-          <Container>{children}</Container>
-          <Footer />
-        </main>
+        <Header />
+        <Container>{children}</Container>
+        <Footer />
       </body>
     </html>
   );

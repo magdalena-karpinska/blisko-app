@@ -33,7 +33,7 @@ export default function Conversation() {
   }
 
   return (
-    <main className="w-full flex flex-col items-center space-y-4 my-8">
+    <>
       <ConversationComponent
         user2={user2}
         messages={conversationMessages}
@@ -43,6 +43,6 @@ export default function Conversation() {
         <TextInput />
         <PrimaryButton>Send</PrimaryButton>
       </div>
-    </main>
+    </>
   );
 }

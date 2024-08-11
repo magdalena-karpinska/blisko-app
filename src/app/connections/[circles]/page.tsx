@@ -13,11 +13,11 @@ export default function CirclePage() {
   );
 
   return (
-    <main className="w-full flex flex-col items-center space-y-4 my-8">
+    <>
       <SearchInput />
       {connectionsInCircle.map((connection) => (
         <ConnectionCard key={connection.name} text={connection.name} />
       ))}
-    </main>
+    </>
   );
 }

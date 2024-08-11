@@ -15,12 +15,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" h-full>
-      <body
-        className={`${lexend.className} antialiased h-full flex flex-col overflow-hidden`}
-      >
-        <Header />
-        <Container>{children}</Container>
-        <Footer />
+      <body className={`${lexend.className} antialiased h-full`}>
+        <div className="flex flex-col min-h-screen max-w-[1100px] mx-auto w-full">
+          <Header />
+          <Container>{children}</Container>
+          <Footer />
+        </div>
       </body>
     </html>
   );

@@ -7,8 +7,8 @@ import { Avatar } from ".";
 
 export function Footer() {
   return (
-    <footer className="footer footer-center p-4 h-24 bg-secondary text-primary-content relative rounded-t-[20px] max-w-[1100px] w-full">
-      <div className="flex justify-between items-center w-full px-12">
+    <footer className="sticky bottom-0 z-10 bg-secondary text-primary-content rounded-t-[20px] w-full max-w-[1100px] mx-auto h-[100px]">
+      <div className="relative flex justify-between items-center w-full px-6 py-4">
         <Link href="/messages">
           <BsEnvelopeHeart className="text-3xl" />
         </Link>

@@ -73,10 +73,10 @@ export function Header() {
 
   return (
     <header
-      className={`flex flex-col items-left rounded-b-3xl overflow-hidden h-[23vh] max-w-[1100px] w-full ${headerBgColor}`}
+      className={`sticky top-0 z-10 flex flex-col items-left rounded-b-3xl overflow-hidden w-full max-w-[1100px] mx-auto ${headerBgColor}`}
     >
       <NavBar bgColor={headerBgColor} />
-      <div className="px-10 pt-5 max-w-[1100px] mx-auto w-full">
+      <div className="px-10 pt-5 pb-5 w-full">
         <Paragraph text={config.paragraphText} />
         <PageHeading text={config.headingText} />
       </div>

@@ -12,3 +12,5 @@ export * from "./nav-bar";
 export * from "./circle";
 export * from "./message";
 export * from "./conversation";
+export * from "./header";
+export * from "./footer";

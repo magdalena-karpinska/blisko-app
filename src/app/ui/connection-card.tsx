@@ -13,7 +13,6 @@ export function ConnectionCard({ text }: CardProps) {
         <Heading5 text={text} />
         <div className="flex space-x-4">
           <BsEnvelope />
-          <TbUserEdit />
         </div>
       </div>
     </div>

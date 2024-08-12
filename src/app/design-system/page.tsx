@@ -10,7 +10,7 @@ import {
   CircleCard,
   ConnectionCard,
   Divider,
-  SearchInput,
+  TextInput,
 } from "../ui";
 
 export default function designSystem() {
@@ -19,9 +19,9 @@ export default function designSystem() {
       <Heading1 text="Design System" />
       <div className="py-8 w-full flex flex-col items-center space-y-4">
         <Divider text="Inputs" />
-        <Heading3 text="Search input" />
+        <Heading3 text="Text input" />
         <Paragraph text="Usage: Search input field" />
-        <SearchInput />
+        <TextInput />
       </div>
       <div className="py-8 w-full flex flex-col items-center space-y-4">
         <Divider text="Buttons" />

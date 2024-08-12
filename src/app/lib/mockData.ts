@@ -47,7 +47,7 @@ export const mockConnections: Connection[] = [
     id: "6",
     name: "Jonathan Zeray",
     circle: "acquaintances",
-    conversationId: "5",
+    conversationId: "6",
   },
   {
     id: "7",

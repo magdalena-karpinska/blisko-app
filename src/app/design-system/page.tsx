@@ -63,7 +63,7 @@ export default function designSystem() {
       <div className="py-8 w-full flex flex-col items-center space-y-4">
         <Heading3 text="Contact Card" />
         <Paragraph text="Usage: for connections" />
-        <ConnectionCard text="Magdalena Karpinska" />
+        <ConnectionCard conversationId="1" text="Magdalena Karpinska" />
       </div>
     </main>
   );

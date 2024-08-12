@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, Suspense } from "react";
 import Link from "next/link";
 
 import { Search } from "../ui";
@@ -20,18 +20,18 @@ export default function AllConversations() {
 
   return (
     <>
-      <Search onSearch={handleSearch} />
-      {filteredConversations.map((conversation) => (
-        <Link
-          className="w-full"
-          href={`/messages/${conversation.conversation_id}`}
-        >
-          <ConversationCard
+      <Suspense fallback={<div>Loading connections...</div>}>
+        <Search onSearch={handleSearch} />
+        {filteredConversations.map((conversation) => (
+          <Link
             key={conversation.conversation_id}
-            text={conversation.user2_name}
-          />
-        </Link>
-      ))}
+            className="w-full"
+            href={`/messages/${conversation.conversation_id}`}
+          >
+            <ConversationCard text={conversation.user2_name} />
+          </Link>
+        ))}
+      </Suspense>
     </>
   );
 }

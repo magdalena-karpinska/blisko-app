@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, Suspense } from "react";
 
 import {
   mockConnections,
@@ -48,14 +48,16 @@ export default function ConnectionsPage() {
 
   return (
     <>
-      <Search onSearch={handleSearch} />
-      {allCircles.map((circle) => (
-        <Circle
-          key={circle}
-          name={circle}
-          connections={getFilteredConnections(circle)}
-        />
-      ))}
+      <Suspense fallback={<div>Loading connections...</div>}>
+        <Search onSearch={handleSearch} />
+        {allCircles.map((circle) => (
+          <Circle
+            key={circle}
+            name={circle}
+            connections={getFilteredConnections(circle)}
+          />
+        ))}
+      </Suspense>
     </>
   );
 }

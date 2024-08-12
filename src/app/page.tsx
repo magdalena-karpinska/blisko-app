@@ -1,4 +1,4 @@
-import { CircleCard } from "./ui";
+import { CircleCard, IconButton } from "./ui";
 import Link from "next/link";
 
 export default function Dashboard() {
@@ -8,7 +8,11 @@ export default function Dashboard() {
         <CircleCard text="All" bgColor="blue" />
       </Link>
       <Link className="w-full" href="/connections/acquaintances">
-        <CircleCard text="Acquaintances" bgColor="lightBlue" />
+        <CircleCard
+          text="Acquaintances"
+          bgColor="lightBlue"
+          isAcquaintances={true}
+        />
       </Link>
       <Link className="w-full" href="/connections/friends">
         <CircleCard text="Friends" bgColor="lightOrange" />

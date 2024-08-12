@@ -2,6 +2,11 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
 }
 
+interface IconButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  size?: "sm" | "md" | "lg";
+}
+
 export function PrimaryButton({ children, className, ...rest }: ButtonProps) {
   return <button className="btn btn-primary">{children}</button>;
 }
@@ -14,9 +19,23 @@ export function GhostButton({ children, className, ...rest }: ButtonProps) {
   return <button className="btn btn-ghost">{children}</button>;
 }
 
-export function IconButton() {
+export function IconButton({
+  size = "md",
+  className,
+  ...rest
+}: IconButtonProps) {
+  const sizeClasses = {
+    sm: "btn-sm",
+    md: "btn-md",
+    lg: "btn-lg",
+  };
   return (
-    <button className="btn btn-circle btn-outline">
+    <button
+      className={`btn btn-circle btn-outline ${sizeClasses[size]} ${
+        className || ""
+      }`}
+      {...rest}
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         className="h-6 w-6"

@@ -14,9 +14,16 @@ type CustomColors =
 type CardProps = {
   text: string;
   bgColor: CustomColors;
+  isAcquaintances?: boolean;
+  iconButtonSize?: "sm" | "md" | "lg";
 };
 
-export function CircleCard({ text, bgColor }: CardProps) {
+export function CircleCard({
+  text,
+  bgColor,
+  isAcquaintances = false,
+  iconButtonSize = "sm",
+}: CardProps) {
   const bgColorClass = {
     primary: "bg-[#84A9CD]",
     "base-100": "bg-[#FFF9E6]",
@@ -33,6 +40,9 @@ export function CircleCard({ text, bgColor }: CardProps) {
     <div className={`card w-full ${bgColorClass}`}>
       <div className="card-body flex flex-row justify-between">
         <h2 className="card-title">{text}</h2>
+        {isAcquaintances && (
+          <IconButton size={iconButtonSize} aria-label="Acquaintances icon" />
+        )}
       </div>
     </div>
   );

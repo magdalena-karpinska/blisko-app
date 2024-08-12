@@ -2,10 +2,14 @@
 
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDebouncedCallback } from "use-debounce";
 
-export function Search({ placeholder }: { placeholder: string }) {
+type SearchProps = {
+  onSearch: (term: string) => void;
+};
+
+export function Search({ onSearch }: SearchProps) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   // Lets you update the URL without a page reload
@@ -25,18 +29,28 @@ export function Search({ placeholder }: { placeholder: string }) {
       newParams.delete("query");
     }
     replace(`${pathname}?${newParams.toString()}`);
-  }, 300);
+    onSearch(term);
+  }, 500);
+
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newTerm = e.target.value;
+    setSearchTerm(newTerm);
+    handleSearch(newTerm);
+  };
+
+  useEffect(() => {
+    setSearchTerm(initialSearchTerm);
+    onSearch(initialSearchTerm);
+  }, [initialSearchTerm, onSearch]);
+
   return (
     <label className="input input-bordered flex items-center gap-2 w-full relative">
       <input
         type="text"
-        value={searchTerm}
         className="grow pl-10"
-        placeholder="Search"
-        onChange={(e) => {
-          handleSearch(e.target.value);
-          setSearchTerm(e.target.value);
-        }}
+        placeholder="Search connections..."
+        value={searchTerm}
+        onChange={onChange}
       />
       <MagnifyingGlassIcon className="absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
     </label>

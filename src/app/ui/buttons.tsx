@@ -1,5 +1,6 @@
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
+  className?: string;
 }
 
 interface IconButtonProps
@@ -11,8 +12,17 @@ export function PrimaryButton({ children, className, ...rest }: ButtonProps) {
   return <button className="btn btn-primary">{children}</button>;
 }
 
-export function SecondaryButton({ children, className, ...rest }: ButtonProps) {
-  return <button className="btn btn-secondary">{children}</button>;
+export function SecondaryButton({
+  children,
+  className = "",
+  ...rest
+}: ButtonProps) {
+  const buttonClasses = `btn btn-secondary ${className}`.trim();
+  return (
+    <button className={buttonClasses} {...rest}>
+      {children}
+    </button>
+  );
 }
 
 export function GhostButton({ children, className, ...rest }: ButtonProps) {

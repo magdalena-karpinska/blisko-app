@@ -1,3 +1,7 @@
+"use client";
+
+import { useState, useCallback } from "react";
+
 import {
   mockConnections,
   ConnectionsCircle,
@@ -5,9 +9,11 @@ import {
   getAllCircles,
 } from "../lib";
 
-import { Circle, SearchInput } from "../ui";
+import { Circle, Search } from "../ui";
 
 export default function ConnectionsPage() {
+  const [searchTerm, setSearchTerm] = useState("");
+
   const connectionsInCircles = mockConnections.reduce(
     (acc, connection) => {
       if (acc[connection.circle]) {
@@ -24,14 +30,30 @@ export default function ConnectionsPage() {
 
   const allCircles = getAllCircles();
 
+  const getFilteredConnections = useCallback(
+    (circle: ConnectionsCircle): Connection[] => {
+      const circleConnections = connectionsInCircles[circle] || [];
+      if (!searchTerm) return circleConnections;
+
+      return circleConnections.filter((connection) =>
+        connection.name.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    },
+    [connectionsInCircles, searchTerm]
+  );
+
+  const handleSearch = useCallback((term: string) => {
+    setSearchTerm(term);
+  }, []);
+
   return (
     <>
-      <SearchInput />
+      <Search onSearch={handleSearch} />
       {allCircles.map((circle) => (
         <Circle
           key={circle}
           name={circle}
-          connections={connectionsInCircles[circle]}
+          connections={getFilteredConnections(circle)}
         />
       ))}
     </>

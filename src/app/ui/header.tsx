@@ -64,6 +64,11 @@ const routeConfigs: Record<string, RouteConfig> = {
     paragraphText: "conversations",
     headingText: "All",
   },
+  "/connections/acquaintances/add": {
+    bgColor: "lightBlue",
+    paragraphText: "add a new",
+    headingText: "Acquaintance",
+  },
 };
 
 export function Header() {

@@ -5,15 +5,17 @@ export type ConversationProps = {
   user2: Connection;
   messages: Message[];
   loggedInUser: LoggedInUser;
+  messagesEndRef?: React.RefObject<HTMLDivElement>;
 };
 
 export function ConversationComponent({
   user2,
   messages,
   loggedInUser,
+  messagesEndRef,
 }: ConversationProps) {
   return (
-    <div className="w-full max-w-2xl space-y-4">
+    <div className="w-full space-y-4">
       {messages.map((message) =>
         message.sender_name === loggedInUser.name ? (
           <MyMessage
@@ -31,6 +33,7 @@ export function ConversationComponent({
           />
         )
       )}
+      <div ref={messagesEndRef} />
     </div>
   );
 }

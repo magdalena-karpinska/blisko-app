@@ -17,36 +17,43 @@ export const mockConnections: Connection[] = [
     id: "1",
     name: "Ines Acedo Leventopoulou",
     circle: "friends",
+    conversationId: "1",
   },
   {
     id: "2",
     name: "Agnese Ventrella",
     circle: "friends",
+    conversationId: "2",
   },
   {
     id: "3",
     name: "Monika Adamczyk-Majewska",
     circle: "friends",
+    conversationId: "3",
   },
   {
     id: "4",
     name: "Bernadeta Karpińska",
     circle: "family",
+    conversationId: "4",
   },
   {
     id: "5",
     name: "Krzysztof Karpiński",
     circle: "family",
+    conversationId: "5",
   },
   {
     id: "6",
     name: "Jonathan Zeray",
     circle: "acquaintances",
+    conversationId: "5",
   },
   {
-    id: "6",
+    id: "7",
     name: "Robin Sahin",
     circle: "acquaintances",
+    conversationId: "7",
   },
 ];
 
@@ -61,13 +68,33 @@ export const mockConversations: Conversation[] = [
     messages: [],
   },
   {
+    conversation_id: "2",
+    user2_name: mockConnections[1].name,
+    messages: [],
+  },
+  {
+    conversation_id: "3",
+    user2_name: mockConnections[2].name,
+    messages: [],
+  },
+  {
     conversation_id: "4",
     user2_name: mockConnections[3].name,
     messages: [],
   },
   {
+    conversation_id: "5",
+    user2_name: mockConnections[4].name,
+    messages: [],
+  },
+  {
     conversation_id: "6",
     user2_name: mockConnections[5].name,
+    messages: [],
+  },
+  {
+    conversation_id: "7",
+    user2_name: mockConnections[6].name,
     messages: [],
   },
 ];

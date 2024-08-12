@@ -4,6 +4,7 @@ export type Connection = {
   id: string;
   name: string;
   circle: ConnectionsCircle;
+  conversationId: string;
 };
 
 export type Conversation = {

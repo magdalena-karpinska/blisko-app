@@ -12,7 +12,11 @@ export function Circle({ name, connections }: CircleProps) {
       <Divider text={name} />
       <div className="space-y-2">
         {connections.map((connection) => (
-          <ConnectionCard key={connection.name} text={connection.name} />
+          <ConnectionCard
+            key={connection.id}
+            text={connection.name}
+            conversationId={connection.conversationId}
+          />
         ))}
       </div>
     </div>

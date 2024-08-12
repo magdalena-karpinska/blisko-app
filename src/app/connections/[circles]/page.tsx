@@ -1,10 +1,16 @@
 "use client";
 
-import { useParams, useSearchParams } from "next/navigation";
+import { useParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 
 import { Connection, ConnectionsCircle, mockConnections } from "../../lib";
-import { ConnectionCard, Search } from "../../ui";
+import {
+  ConnectionCard,
+  Divider,
+  PrimaryButton,
+  Search,
+  SecondaryButton,
+} from "../../ui";
 
 export default function CirclePage() {
   const params = useParams();
@@ -35,7 +41,16 @@ export default function CirclePage() {
 
   return (
     <>
+      {circleName == "acquaintances" && (
+        <div className="w-full flex flex-col items-center">
+          <SecondaryButton className="w-full max-w-none">
+            Add an acquaintance
+          </SecondaryButton>
+          <Divider text="or" />
+        </div>
+      )}
       <Search onSearch={handleSearch} />
+
       {filteredConnections.map((connection) => (
         <ConnectionCard
           key={connection.name}

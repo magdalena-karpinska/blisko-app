@@ -8,8 +8,28 @@ interface IconButtonProps
   size?: "sm" | "md" | "lg";
 }
 
-export function PrimaryButton({ children, className, ...rest }: ButtonProps) {
-  return <button className="btn btn-primary">{children}</button>;
+export function PrimaryButton({
+  children,
+  className,
+  onClick,
+  ...rest
+}: ButtonProps) {
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    if (onClick) {
+      onClick(event);
+    } else {
+    }
+  };
+
+  return (
+    <button
+      className={`btn btn-primary ${className || ""}`}
+      onClick={handleClick}
+      {...rest}
+    >
+      {children}
+    </button>
+  );
 }
 
 export function SecondaryButton({

@@ -4,6 +4,7 @@ import {
   Conversation,
   LoggedInUser,
   Message,
+  User,
 } from ".";
 
 export const mockLoggedInUser: LoggedInUser = {
@@ -56,6 +57,37 @@ export const mockConnections: Connection[] = [
     conversationId: "7",
   },
 ];
+
+export const mockUsers: User[] = [
+  {
+    id: "8",
+    name: "RuPaul",
+  },
+  {
+    id: "9",
+    name: "Cordozar Calvin Broadus Jr.",
+  },
+  {
+    id: "10",
+    name: "Paris Hilton",
+  },
+  {
+    id: "11",
+    name: "Trixy Mattel",
+  },
+  {
+    id: "12",
+    name: "Katya Zamolodchikova",
+  },
+  {
+    id: "13",
+    name: "Sasha Velour",
+  },
+];
+
+export function getAllUsers(): User[] {
+  return mockUsers;
+}
 
 export function getAllCircles(): ConnectionsCircle[] {
   return ["acquaintances", "friends", "family"];

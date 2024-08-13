@@ -7,6 +7,11 @@ export type Connection = {
   conversationId: string;
 };
 
+export type User = {
+  id: string;
+  name: string;
+};
+
 export type Conversation = {
   conversation_id: string | null;
   user2_name: string;

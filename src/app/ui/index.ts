@@ -16,3 +16,4 @@ export * from "./header";
 export * from "./footer";
 export * from "./search";
 export * from "./conversation-card";
+export * from "./user-card";

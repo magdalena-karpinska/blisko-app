@@ -31,3 +31,18 @@ export type LoggedInUser = {
   name: string;
   avatar: string;
 };
+
+export type EnhancedConnection = Connection & {
+  messages: Message[];
+  circle: ConnectionsCircle;
+};
+
+export type CircleManagementState = {
+  connections: EnhancedConnection[];
+  addConnection: (user: User) => void;
+  sendMessage: (senderId: string, receiverId: string, content: string) => void;
+  getConnectionsByCircle: (circle: ConnectionsCircle) => EnhancedConnection[];
+  getAllConnections: () => EnhancedConnection[];
+  getConnection: (userId: string) => EnhancedConnection | undefined;
+};
+d;

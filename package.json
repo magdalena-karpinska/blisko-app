@@ -25,13 +25,16 @@
     "react": "^18",
     "react-dom": "^18",
     "react-icons": "^5.2.1",
-    "use-debounce": "^10.0.2"
+    "use-debounce": "^10.0.2",
+    "uuid": "^10.0.0",
+    "zustand": "^4.5.4"
   },
   "devDependencies": {
     "@types/node": "^20",
     "@types/pg": "^8.11.6",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/uuid": "^10.0.0",
     "daisyui": "^4.12.10",
     "drizzle-kit": "^0.24.0",
     "eslint": "^8",

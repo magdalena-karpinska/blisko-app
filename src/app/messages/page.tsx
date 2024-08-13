@@ -3,19 +3,21 @@
 import { useState, useCallback, Suspense } from "react";
 import Link from "next/link";
 
-import { Search } from "../ui";
-import { mockConversations } from "../lib";
-import { ConversationCard } from "../ui";
+import { Search, ConversationCard } from "@/app/ui";
+import { useCircleManagement } from "@/app/lib";
 
 export default function AllConversations() {
-  const [filteredConversations, setFilteredConversations] =
-    useState(mockConversations);
+  const { getAllConnections } = useCircleManagement();
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const allConnections = getAllConnections();
+
+  const filteredConversations = allConnections.filter((connection) =>
+    connection.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   const handleSearch = useCallback((term: string) => {
-    const filtered = mockConversations.filter((conversation) =>
-      conversation.user2_name.toLowerCase().includes(term.toLowerCase())
-    );
-    setFilteredConversations(filtered);
+    setSearchTerm(term);
   }, []);
 
   return (
@@ -24,11 +26,11 @@ export default function AllConversations() {
         <Search onSearch={handleSearch} />
         {filteredConversations.map((conversation) => (
           <Link
-            key={conversation.conversation_id}
+            key={conversation.conversationId}
             className="w-full"
-            href={`/messages/${conversation.conversation_id}`}
+            href={`/messages/${conversation.conversationId}`}
           >
-            <ConversationCard text={conversation.user2_name} />
+            <ConversationCard text={conversation.name} />
           </Link>
         ))}
       </Suspense>

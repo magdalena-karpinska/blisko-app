@@ -1,49 +1,52 @@
 "use client";
 
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 
-import { Connection, ConnectionsCircle, mockConnections } from "../../lib";
-import {
-  ConnectionCard,
-  Divider,
-  PrimaryButton,
-  Search,
-  SecondaryButton,
-} from "../../ui";
+import { Connection, ConnectionsCircle, useCircleManagement } from "@/app/lib";
+import { ConnectionCard, Divider, Search, SecondaryButton } from "@/app/ui";
 
 export default function CirclePage() {
   const params = useParams();
+  const router = useRouter();
   const circleName = params.circles as ConnectionsCircle;
+
+  const { getConnectionsByCircle, getAllConnections } = useCircleManagement();
 
   const [filteredConnections, setFilteredConnections] = useState<Connection[]>(
     []
   );
 
   useEffect(() => {
-    const filtered = mockConnections.filter(
-      (connection) => connection.circle === circleName
-    );
-    setFilteredConnections(filtered);
-  }, [circleName]);
+    const connections = getConnectionsByCircle(circleName);
+    setFilteredConnections(connections);
+  }, [circleName, getConnectionsByCircle]);
 
   const handleSearch = useCallback(
     (term: string) => {
-      const filtered = mockConnections.filter(
+      const allConnections = getAllConnections();
+      const filtered = allConnections.filter(
         (connection) =>
           connection.circle === circleName &&
           connection.name.toLowerCase().includes(term.toLowerCase())
       );
       setFilteredConnections(filtered);
     },
-    [circleName]
+    [circleName, getAllConnections]
   );
+
+  const handleAddAcquaintance = () => {
+    router.push("/connections/acquaintances/add");
+  };
 
   return (
     <>
       {circleName == "acquaintances" && (
         <div className="w-full flex flex-col items-center">
-          <SecondaryButton className="w-full max-w-none">
+          <SecondaryButton
+            className="w-full max-w-none"
+            onClick={handleAddAcquaintance}
+          >
             Add an acquaintance
           </SecondaryButton>
           <Divider text="or" />
@@ -53,7 +56,7 @@ export default function CirclePage() {
 
       {filteredConnections.map((connection) => (
         <ConnectionCard
-          key={connection.name}
+          key={connection.id}
           text={connection.name}
           conversationId={connection.conversationId}
         />

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-import { Connection, getAllUsers, mockConnections, User } from "@/app/lib";
+import { getAllUsers, User, useCircleManagement } from "@/app/lib";
 import { Search, UserCard } from "@/app/ui";
 
 const ErrorDisplay: React.FC<{ message: string }> = ({ message }) => (
@@ -14,20 +14,22 @@ const ErrorDisplay: React.FC<{ message: string }> = ({ message }) => (
 
 export default function AddNewAcquaintancePage() {
   const [availableUsers, setAvailableUsers] = useState<User[]>([]);
-  const [connections, setConnections] = useState<Connection[]>(mockConnections);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
+
+  const { getAllConnections, addConnection } = useCircleManagement();
 
   useEffect(() => {
     const fetchUsers = async () => {
       try {
         const users = await getAllUsers();
+        const existingConnections = getAllConnections();
         const newAvailableUsers = users.filter(
-          (user) => !connections.some((connection) => connection.id === user.id)
+          (user) =>
+            !existingConnections.some((connection) => connection.id === user.id)
         );
         setAvailableUsers(newAvailableUsers);
       } catch (err) {
-        console.error("Error fetching users: ", err);
         setError(
           "An error occurred while fetching users. Please try again later."
         );
@@ -35,7 +37,7 @@ export default function AddNewAcquaintancePage() {
     };
 
     fetchUsers();
-  }, []);
+  }, [getAllConnections]);
 
   const handleSearch = (term: string) => {
     setSearchTerm(term);
@@ -44,18 +46,12 @@ export default function AddNewAcquaintancePage() {
   const handleAddUser = (userId: string) => {
     const userToAdd = availableUsers.find((user) => user.id === userId);
     if (userToAdd) {
-      const newConnection: Connection = {
-        ...userToAdd,
-        circle: "acquaintances",
-        conversationId: userToAdd.id,
-      };
-
-      setConnections((prevConnections) => [...prevConnections, newConnection]);
+      const newConnection = addConnection(userToAdd);
       setAvailableUsers((prevUsers) =>
         prevUsers.filter((user) => user.id !== userId)
       );
-
-      console.log("Added user with ID: ", userId);
+    } else {
+      console.error("User not found for ID:", userId);
     }
   };
 

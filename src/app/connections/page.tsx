@@ -3,18 +3,21 @@
 import { useState, useCallback, Suspense } from "react";
 
 import {
-  mockConnections,
   ConnectionsCircle,
   Connection,
   getAllCircles,
+  useCircleManagement,
 } from "../lib";
 
 import { Circle, Search } from "../ui";
 
 export default function ConnectionsPage() {
   const [searchTerm, setSearchTerm] = useState("");
+  const { getAllConnections } = useCircleManagement();
 
-  const connectionsInCircles = mockConnections.reduce(
+  const allConnections = getAllConnections();
+
+  const connectionsInCircles = allConnections.reduce(
     (acc, connection) => {
       if (acc[connection.circle]) {
         acc[connection.circle].push(connection);

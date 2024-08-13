@@ -1,70 +1,89 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import { useEffect, useRef } from "react";
-
-import {
-  mockConnections,
-  mockConversations,
-  mockLoggedInUser,
-  mockMessages,
-} from "@/app/lib";
+import { useEffect, useRef, useState } from "react";
+import { Connection, Message } from "@/app/lib"; // Make sure to import these types
+import { useCircleManagement } from "@/app/lib";
 import { TextInput, ConversationComponent, PrimaryButton } from "@/app/ui";
 
 export default function Conversation() {
   const params = useParams();
   const conversationId = params.conversationId as string;
 
-  // To scroll to the bottom of the chat
-  // Create a reference to the last message
+  const { getConnection, sendMessage } = useCircleManagement();
+  const [inputValue, setInputValue] = useState<string>("");
+
+  const [loggedInUser] = useState({
+    id: "current_user",
+    name: "Magdalena Karpińska",
+    avatar: "/magdalena.webp",
+  });
+
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  // To find a proper conversation
-  const oneToOneConversation = mockConversations.find(
-    (conversation) => conversation.conversation_id === conversationId
+  // Subscribe to the specific connection in the Zustand store
+  const connection = useCircleManagement((state) =>
+    state.connections.find(
+      (c: Connection) => c.conversationId === conversationId
+    )
   );
 
-  //  To filter messages by conversation id and sort them by timestamp
-  const conversationMessages = mockMessages
-    .filter((message) => message.conversation_id === conversationId)
-    .sort(
-      (a, b) =>
-        // Fromt o oldest to the newest
-        new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()
-    );
+  useEffect(() => {
+    if (!connection) {
+      console.error("Connection not found for ID:", conversationId);
+    }
+  }, [connection, conversationId]);
+
+  if (!connection) {
+    return <div>Connection not found. ID: {conversationId}</div>;
+  }
+
+  // Sort messages by timestamp
+  const conversationMessages = [...connection.messages].sort(
+    (a: Message, b: Message) =>
+      new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()
+  );
 
   // Autoscroll functionality
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-  // Call the function when the conversationMessages change
   useEffect(() => {
     scrollToBottom();
   }, [conversationMessages]);
 
-  if (!oneToOneConversation) {
-    return <div>Conversation not found. ID: {conversationId}</div>;
-  }
-
-  const user2 = mockConnections.find(
-    (connection) => connection.name === oneToOneConversation.user2_name
-  );
-  if (!user2) {
-    return <div>User not found. Name: {oneToOneConversation.user2_name}</div>;
-  }
+  const handleSendMessage = (content: string) => {
+    if (content.trim() !== "") {
+      sendMessage(loggedInUser.id, conversationId, content);
+      setInputValue("");
+    }
+  };
 
   return (
     <>
       <ConversationComponent
-        user2={user2}
+        user2={connection}
         messages={conversationMessages}
-        loggedInUser={mockLoggedInUser}
+        loggedInUser={loggedInUser}
         messagesEndRef={messagesEndRef}
       />
       <div className="w-full max-w-2-xl flex space-x-2 ">
-        <TextInput />
-        <PrimaryButton>Send</PrimaryButton>
+        <TextInput
+          value={inputValue}
+          onChange={(e) => {
+            setInputValue(e.target.value);
+          }}
+          onSend={handleSendMessage}
+        />
+        <PrimaryButton
+          onClick={() => {
+            handleSendMessage(inputValue);
+          }}
+          className="btn btn-primary"
+        >
+          Send
+        </PrimaryButton>
       </div>
     </>
   );

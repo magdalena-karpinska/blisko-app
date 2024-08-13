@@ -45,4 +45,3 @@ export type CircleManagementState = {
   getAllConnections: () => EnhancedConnection[];
   getConnection: (userId: string) => EnhancedConnection | undefined;
 };
-d;

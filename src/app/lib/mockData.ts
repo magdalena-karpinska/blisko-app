@@ -1,11 +1,4 @@
-import {
-  Connection,
-  ConnectionsCircle,
-  Conversation,
-  LoggedInUser,
-  Message,
-  User,
-} from ".";
+import { Connection, Conversation, LoggedInUser, Message, User } from ".";
 
 export const mockLoggedInUser: LoggedInUser = {
   id: "current_user",
@@ -16,44 +9,51 @@ export const mockLoggedInUser: LoggedInUser = {
 export const mockConnections: Connection[] = [
   {
     id: "1",
+    userId: "1",
     name: "Ines Acedo Leventopoulou",
-    circle: "friends",
+    circleName: "friends",
     conversationId: "1",
   },
   {
     id: "2",
+    userId: "2",
     name: "Agnese Ventrella",
-    circle: "friends",
+    circleName: "friends",
     conversationId: "2",
   },
   {
     id: "3",
+    userId: "3",
     name: "Monika Adamczyk-Majewska",
-    circle: "friends",
+    circleName: "friends",
     conversationId: "3",
   },
   {
     id: "4",
+    userId: "4",
     name: "Bernadeta Karpińska",
-    circle: "family",
+    circleName: "family",
     conversationId: "4",
   },
   {
     id: "5",
+    userId: "5",
     name: "Krzysztof Karpiński",
-    circle: "family",
+    circleName: "family",
     conversationId: "5",
   },
   {
     id: "6",
+    userId: "6",
     name: "Jonathan Zeray",
-    circle: "acquaintances",
+    circleName: "acquaintances",
     conversationId: "6",
   },
   {
     id: "7",
+    userId: "7",
     name: "Robin Sahin",
-    circle: "acquaintances",
+    circleName: "acquaintances",
     conversationId: "7",
   },
 ];
@@ -89,7 +89,7 @@ export function getAllUsers(): User[] {
   return mockUsers;
 }
 
-export function getAllCircles(): ConnectionsCircle[] {
+export function getAllCircles(): string[] {
   return ["acquaintances", "friends", "family"];
 }
 

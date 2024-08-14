@@ -3,15 +3,14 @@ import { v4 as uuidv4 } from "uuid";
 
 import {
   Message,
-  ConnectionsCircle,
   CircleManagementState,
   User,
   EnhancedConnection,
 } from "@/app/lib";
 import { mockConnections, mockMessages, mockLoggedInUser } from "@/app/lib";
 
-const friendsTreshold = 5;
-const familyTreshold = 15;
+const friendsThreshold = 5;
+const familyThreshold = 15;
 
 export const countMessagesFromLast24h = (messages: Message[]): number => {
   const oneDayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
@@ -19,18 +18,17 @@ export const countMessagesFromLast24h = (messages: Message[]): number => {
     .length;
 };
 
-export const attachToCircle = (messages: Message[]): ConnectionsCircle => {
+export const attachToCircle = (messages: Message[]): string => {
   const amountOfMessagesFromLast24h = countMessagesFromLast24h(messages);
-  if (amountOfMessagesFromLast24h >= familyTreshold) {
+  if (amountOfMessagesFromLast24h >= familyThreshold) {
     return "family";
-  } else if (amountOfMessagesFromLast24h >= friendsTreshold) {
+  } else if (amountOfMessagesFromLast24h >= friendsThreshold) {
     return "friends";
   } else {
     return "acquaintances";
   }
 };
 
-// Helper function to merge mockConnections and mockMessages
 const createEnhancedConnections = (): EnhancedConnection[] => {
   return mockConnections.map((connection) => ({
     ...connection,
@@ -40,15 +38,15 @@ const createEnhancedConnections = (): EnhancedConnection[] => {
   }));
 };
 
-// Create a new store using zustand
 export const useCircleManagement = create<CircleManagementState>(
   (set, get) => ({
     connections: createEnhancedConnections(),
     addConnection: (user: User) => {
-      const newConnection = {
-        id: user.id,
+      const newConnection: EnhancedConnection = {
+        id: uuidv4(),
+        userId: user.id,
         name: user.name,
-        circle: "acquaintances" as ConnectionsCircle,
+        circleName: "acquaintances",
         conversationId: uuidv4(),
         messages: [],
       };
@@ -63,7 +61,7 @@ export const useCircleManagement = create<CircleManagementState>(
       content: string
     ) => {
       set((state) => {
-        const newMessage = {
+        const newMessage: Message = {
           message_id: uuidv4(),
           conversation_id: conversationId,
           sender_name: mockLoggedInUser.name,
@@ -75,28 +73,29 @@ export const useCircleManagement = create<CircleManagementState>(
             ? {
                 ...connection,
                 messages: [...connection.messages, newMessage],
-                circle: attachToCircle([...connection.messages, newMessage]),
+                circleName: attachToCircle([
+                  ...connection.messages,
+                  newMessage,
+                ]),
               }
             : connection
         );
         return { connections: updatedConnections };
       });
     },
-    getConnectionsByCircle: (circle: ConnectionsCircle) => {
+    getConnectionsByCircle: (circleName: string) => {
       const connections = get().connections.filter(
-        (connection) => connection.circle === circle
+        (connection) => connection.circleName === circleName
       );
       return connections;
     },
     getAllConnections: () => {
-      const connections = get().connections;
-      return connections;
+      return get().connections;
     },
     getConnection: (conversationId: string) => {
-      const connection = get().connections.find(
+      return get().connections.find(
         (connection) => connection.conversationId === conversationId
       );
-      return connection;
     },
   })
 );

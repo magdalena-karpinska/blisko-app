@@ -1,9 +1,8 @@
-export type ConnectionsCircle = "family" | "friends" | "acquaintances";
-
 export type Connection = {
   id: string;
+  userId: string;
   name: string;
-  circle: ConnectionsCircle;
+  circleName: string;
   conversationId: string;
 };
 
@@ -32,16 +31,22 @@ export type LoggedInUser = {
   avatar: string;
 };
 
-export type EnhancedConnection = Connection & {
+export type EnhancedConnection = {
+  id: string;
+  userId: string;
+  name: string;
+  circleName: string;
+  conversationId: string;
   messages: Message[];
-  circle: ConnectionsCircle;
 };
 
 export type CircleManagementState = {
   connections: EnhancedConnection[];
-  addConnection: (user: User) => void;
+  addConnection: (user: User) => EnhancedConnection;
   sendMessage: (senderId: string, receiverId: string, content: string) => void;
-  getConnectionsByCircle: (circle: ConnectionsCircle) => EnhancedConnection[];
+  getConnectionsByCircle: (
+    circleName: string
+  ) => EnhancedConnection[];
   getAllConnections: () => EnhancedConnection[];
-  getConnection: (userId: string) => EnhancedConnection | undefined;
+  getConnection: (conversationId: string) => EnhancedConnection | undefined;
 };

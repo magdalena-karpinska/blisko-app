@@ -7,7 +7,7 @@ export const users = pgTable("users", {
   avatar: varchar("avatar", { length: 255 }).notNull(),
 });
 
-export const connectionsCircles = pgTable("connections", {
+export const connectionsCircles = pgTable("connections_circles", {
   name: varchar("name", { length: 50 }).primaryKey(),
 });
 
@@ -33,46 +33,3 @@ export const messages = pgTable("messages", {
   text: text("text").notNull(),
   timestamp: timestamp("timestamp").notNull().defaultNow(),
 });
-
-export const usersRelations = relations(users, ({ many }) => ({
-  connections: many(connections),
-}));
-
-export const conversationsRelations = relations(conversations, ({ many }) => ({
-  connections: many(connections),
-  messages: many(messages),
-}));
-
-export const connectionsCirclesRelations = relations(
-  connectionsCircles,
-  ({ many }) => ({
-    connections: many(connections),
-  })
-);
-
-export const connectionsRelations = relations(connections, ({ one, many }) => ({
-  user: one(users, {
-    fields: [connections.userId],
-    references: [users.id],
-  }),
-  conversation: one(conversations, {
-    fields: [connections.conversationId],
-    references: [conversations.id],
-  }),
-  circle: one(connectionsCircles, {
-    fields: [connections.circleName],
-    references: [connectionsCircles.name],
-  }),
-  messages: many(messages),
-}));
-
-export const messagesRelations = relations(messages, ({ one }) => ({
-  conversation: one(conversations, {
-    fields: [messages.conversationId],
-    references: [conversations.id],
-  }),
-  sender: one(connections, {
-    fields: [messages.senderId],
-    references: [connections.id],
-  }),
-}));

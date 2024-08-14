@@ -32,8 +32,12 @@ export const connections = pgTable("connections", {
 
 export const messages = pgTable("messages", {
   id: uuid("id").defaultRandom().primaryKey().notNull(),
-  conversationId: uuid("conversation_id").references(() => conversations.id),
-  senderId: uuid("sender_id").references(() => connections.id),
+  conversationId: uuid("conversation_id")
+    .notNull()
+    .references(() => conversations.id),
+  senderId: uuid("sender_id")
+    .notNull()
+    .references(() => connections.id),
   text: text("text").notNull(),
   timestamp: timestamp("timestamp").notNull().defaultNow(),
 });

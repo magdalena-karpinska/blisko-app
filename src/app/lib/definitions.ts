@@ -9,6 +9,7 @@ export type Connection = {
 export type User = {
   id: string;
   name: string;
+  avatar: string;
 };
 
 export type Conversation = {
@@ -18,9 +19,9 @@ export type Conversation = {
 };
 
 export type Message = {
-  message_id: string;
-  conversation_id: string;
-  sender_name: string;
+  id: string;
+  conversationId: string;
+  senderId: string;
   text: string;
   timestamp: string;
 };
@@ -44,9 +45,7 @@ export type CircleManagementState = {
   connections: EnhancedConnection[];
   addConnection: (user: User) => EnhancedConnection;
   sendMessage: (senderId: string, receiverId: string, content: string) => void;
-  getConnectionsByCircle: (
-    circleName: string
-  ) => EnhancedConnection[];
+  getConnectionsByCircle: (circleName: string) => EnhancedConnection[];
   getAllConnections: () => EnhancedConnection[];
   getConnection: (conversationId: string) => EnhancedConnection | undefined;
 };

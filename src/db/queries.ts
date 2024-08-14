@@ -1,6 +1,6 @@
-import { db } from "./index"; // Import the 'raw' function from the 'index' file
+import { db } from "./index";
 import { eq, not, inArray, sql } from "drizzle-orm";
-import { users, connections, conversations } from "@/db/schema";
+import { users, connections, conversations, messages } from "@/db/schema";
 import { Connection, User } from "@/app/lib";
 
 export async function fetchAllUsers(): Promise<User[]> {
@@ -58,4 +58,31 @@ export async function searchUsers(searchTerm: string): Promise<User[]> {
     .select()
     .from(users)
     .where(sql`LOWER(${users.name}) LIKE LOWER(${term})`);
+}
+
+export async function insertMessage(
+  conversationId: string,
+  senderId: string,
+  text: string
+): Promise<void> {
+  await db.insert(messages).values({
+    conversationId,
+    senderId,
+    text,
+    timestamp: new Date(),
+  });
+}
+
+export async function fetchMessagesForConversation(conversationId: string) {
+  return db
+    .select({
+      id: messages.id,
+      conversationId: messages.conversationId,
+      senderId: messages.senderId,
+      text: messages.text,
+      timestamp: messages.timestamp,
+    })
+    .from(messages)
+    .where(eq(messages.conversationId, conversationId))
+    .orderBy(messages.timestamp);
 }

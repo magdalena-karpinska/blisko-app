@@ -1,13 +1,15 @@
-import { create } from "zustand";
-import { v4 as uuidv4 } from "uuid";
-
+import { useState, useCallback, useEffect } from "react";
 import {
-  Message,
-  CircleManagementState,
+  Connection,
   User,
-  EnhancedConnection,
+  Message,
+  getMessagesForConversation,
 } from "@/app/lib";
-import { mockConnections, mockMessages, mockLoggedInUser } from "@/app/lib";
+import {
+  getAllConnections,
+  addConnection as addConnectionAction,
+  sendMessage as sendMessageAction,
+} from "@/app/lib";
 
 const friendsThreshold = 5;
 const familyThreshold = 15;
@@ -29,73 +31,101 @@ export const attachToCircle = (messages: Message[]): string => {
   }
 };
 
-const createEnhancedConnections = (): EnhancedConnection[] => {
-  return mockConnections.map((connection) => ({
-    ...connection,
-    messages: mockMessages.filter(
-      (message) => message.conversation_id === connection.conversationId
-    ),
-  }));
-};
+export const useCircleManagement = () => {
+  const [connections, setConnections] = useState<Connection[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-export const useCircleManagement = create<CircleManagementState>(
-  (set, get) => ({
-    connections: createEnhancedConnections(),
-    addConnection: (user: User) => {
-      const newConnection: EnhancedConnection = {
-        id: uuidv4(),
-        userId: user.id,
-        name: user.name,
-        circleName: "acquaintances",
-        conversationId: uuidv4(),
-        messages: [],
-      };
-      set((state) => ({
-        connections: [...state.connections, newConnection],
-      }));
-      return newConnection;
-    },
-    sendMessage: (
-      senderId: string,
-      conversationId: string,
-      content: string
-    ) => {
-      set((state) => {
-        const newMessage: Message = {
-          message_id: uuidv4(),
-          conversation_id: conversationId,
-          sender_name: mockLoggedInUser.name,
-          text: content,
-          timestamp: new Date().toISOString(),
-        };
-        const updatedConnections = state.connections.map((connection) =>
-          connection.conversationId === conversationId
-            ? {
-                ...connection,
-                messages: [...connection.messages, newMessage],
-                circleName: attachToCircle([
-                  ...connection.messages,
-                  newMessage,
-                ]),
-              }
-            : connection
+  const fetchConnections = useCallback(async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const fetchedConnections = await getAllConnections();
+      setConnections(fetchedConnections);
+    } catch (error) {
+      setError("Failed to fetch connections. Please try again later.");
+      console.error("Error fetching connections:", error);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchConnections();
+  }, [fetchConnections]);
+
+  const addConnection = useCallback(
+    async (user: User, circleName: string = "acquaintances") => {
+      try {
+        const newConnection = await addConnectionAction(
+          user.id,
+          user.name,
+          circleName
         );
-        return { connections: updatedConnections };
-      });
+        setConnections((prevConnections) => [
+          ...prevConnections,
+          newConnection,
+        ]);
+        return newConnection;
+      } catch (error) {
+        setError("Failed to add connection. Please try again.");
+        console.error("Error adding connection:", error);
+      }
     },
-    getConnectionsByCircle: (circleName: string) => {
-      const connections = get().connections.filter(
+    []
+  );
+
+  const sendMessage = useCallback(
+    async (senderId: string, conversationId: string, content: string) => {
+      try {
+        await sendMessageAction(senderId, conversationId, content);
+        // After sending the message, fetch the updated messages for this conversation
+        const updatedMessages = await getMessagesForConversation(
+          conversationId
+        );
+        // Update the local state with the new messages
+        setConnections((prevConnections) =>
+          prevConnections.map((conn) =>
+            conn.conversationId === conversationId
+              ? { ...conn, messages: updatedMessages }
+              : conn
+          )
+        );
+      } catch (error) {
+        setError("Failed to send message. Please try again.");
+        console.error("Error sending message:", error);
+      }
+    },
+    []
+  );
+
+  const getConnectionsByCircle = useCallback(
+    (circleName: string) => {
+      return connections.filter(
         (connection) => connection.circleName === circleName
       );
-      return connections;
     },
-    getAllConnections: () => {
-      return get().connections;
-    },
-    getConnection: (conversationId: string) => {
-      return get().connections.find(
+    [connections]
+  );
+
+  const getConnection = useCallback(
+    (conversationId: string) => {
+      return connections.find(
         (connection) => connection.conversationId === conversationId
       );
     },
-  })
-);
+    [connections]
+  );
+
+  return {
+    connections,
+    loading,
+    error,
+    fetchConnections,
+    addConnection,
+    sendMessage,
+    getConnectionsByCircle,
+    getAllConnections: () => connections,
+    getConnection,
+  };
+};

@@ -1,5 +1,10 @@
-export default function Page() {
-  const connectionNames = ["Magdalena", "Anna", "Ula"];
+"use server";
+
+import { fetchAllConnections } from "../lib";
+
+export default async function Page() {
+  const connections = await fetchAllConnections();
+  const connectionNames = connections.map((connection) => connection.name);
   return (
     <>
       <h1>Experiment</h1>

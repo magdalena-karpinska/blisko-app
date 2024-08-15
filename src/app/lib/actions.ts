@@ -1,3 +1,4 @@
+import { uuid } from "drizzle-orm/pg-core";
 import {
   Conversation,
   getAllUsers,
@@ -9,6 +10,7 @@ import {
   getAllConnections,
   updateConnections,
   updateConversations,
+  mockMessages,
 } from ".";
 import { getAllConversations } from ".";
 
@@ -178,6 +180,27 @@ export async function addConnection(user: User): Promise<Connection[]> {
     await updateMockData(currentConnections, currentConversations);
 
     return currentConnections;
+  } catch (error) {
+    console.error("Error adding connection", error);
+    throw error;
+  }
+}
+
+export async function sendMessage(
+  senderId: string,
+  conversationId: string,
+  text: string
+): Promise<any> {
+  try {
+    const newMessage: Message = {
+      id: Math.random.toString(),
+      senderId: senderId,
+      text: text,
+      conversationId: conversationId,
+      timestamp: new Date().toISOString(),
+    };
+
+    mockMessages.push(newMessage);
   } catch (error) {
     console.error("Error adding connection", error);
     throw error;

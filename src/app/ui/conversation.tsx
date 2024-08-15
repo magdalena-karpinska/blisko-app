@@ -1,8 +1,16 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Connection, fetchMessagesById, LoggedInUser, Message } from "../lib";
+import {
+  Connection,
+  fetchMessagesById,
+  LoggedInUser,
+  Message,
+  sendMessage,
+} from "../lib";
 import { MyMessage, TheirMessage } from "./message";
+import { TextInput } from "./inputs";
+import { PrimaryButton } from "./buttons";
 
 export type ConversationProps = {
   user2: Connection | null;
@@ -17,6 +25,7 @@ export function Conversation({
 }: ConversationProps) {
   const [messages, setMessages] = useState<Message[]>([]);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const [inputValue, setInputValue] = useState<string>("");
 
   useEffect(() => {
     async function loadMessages() {
@@ -26,9 +35,12 @@ export function Conversation({
     loadMessages();
   }, [conversationId]);
 
-  useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
+  const handleSendMessage = (text: string) => {
+    if (text.trim() !== "") {
+      sendMessage(loggedInUser.id, conversationId, text);
+      setInputValue("");
+    }
+  };
 
   return (
     <div className="w-full space-y-4">
@@ -50,6 +62,22 @@ export function Conversation({
         )
       )}
       <div ref={messagesEndRef} />
+      <div className="w-full max-w-2-xl flex space-x-2 ">
+        <TextInput
+          value={inputValue}
+          onChange={(e) => {
+            setInputValue(e.target.value);
+          }}
+        />
+        <PrimaryButton
+          onClick={() => {
+            handleSendMessage(inputValue);
+          }}
+          className="btn btn-primary"
+        >
+          Send
+        </PrimaryButton>
+      </div>
     </div>
   );
 }

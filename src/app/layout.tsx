@@ -14,7 +14,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" h-full>
+    <html lang="en" className="h-full">
       <body className={`${lexend.className} antialiased h-full`}>
         <div className="flex flex-col min-h-screen max-w-[1100px] mx-auto w-full">
           <Header />

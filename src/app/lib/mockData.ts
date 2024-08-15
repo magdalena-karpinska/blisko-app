@@ -7,7 +7,6 @@ export const mockLoggedInUser: LoggedInUser = {
 };
 
 export async function getLoggedInUser(): Promise<LoggedInUser> {
-  await new Promise((resolve) => setTimeout(resolve, 500));
   return mockLoggedInUser;
 }
 
@@ -99,6 +98,13 @@ export const mockConnections: Connection[] = [
     circleName: "acquaintances",
     conversationId: "7",
   },
+  {
+    id: "100",
+    userId: "100",
+    name: "Anna Kowalska",
+    circleName: "acquaintances",
+    conversationId: "100",
+  },
 ];
 
 let currentConnections = [...mockConnections];
@@ -111,7 +117,6 @@ export async function updateConnections(
 }
 
 export async function getAllConnections(): Promise<Connection[]> {
-  await new Promise((resolve) => setTimeout(resolve, 500));
   console.log("Getting all connections:", currentConnections);
   return currentConnections;
 }
@@ -168,7 +173,6 @@ export async function updateConversations(
 }
 
 export async function getAllConversations(): Promise<Conversation[]> {
-  await new Promise((resolve) => setTimeout(resolve, 500));
   console.log("Getting all conversations:", currentConversations);
   return currentConversations;
 }
@@ -429,7 +433,6 @@ export const mockMessages: Message[] = [
 ];
 
 export async function getAllMessages(): Promise<Message[]> {
-  await new Promise((resolve) => setTimeout(resolve, 500));
   console.log("Getting all messages:", mockMessages);
   return mockMessages;
 }

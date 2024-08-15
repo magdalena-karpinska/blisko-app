@@ -6,10 +6,6 @@ export const mockLoggedInUser: LoggedInUser = {
   avatar: "/magdalena.webp",
 };
 
-export async function getLoggedInUser(): Promise<LoggedInUser> {
-  return mockLoggedInUser;
-}
-
 export const mockUsers: User[] = [
   {
     id: "100",
@@ -42,11 +38,6 @@ export const mockUsers: User[] = [
     avatar: "",
   },
 ];
-
-export async function getAllUsers(): Promise<User[]> {
-  await new Promise((resolve) => setTimeout(resolve, 500));
-  return mockUsers;
-}
 
 export const mockConnections: Connection[] = [
   {
@@ -107,24 +98,6 @@ export const mockConnections: Connection[] = [
   },
 ];
 
-let currentConnections = [...mockConnections];
-
-export async function updateConnections(
-  newConnections: Connection[]
-): Promise<void> {
-  console.log("Updating connections:", newConnections);
-  currentConnections = newConnections;
-}
-
-export async function getAllConnections(): Promise<Connection[]> {
-  console.log("Getting all connections:", currentConnections);
-  return currentConnections;
-}
-
-export async function getAllCircles(): Promise<string[]> {
-  return ["acquaintances", "friends", "family"];
-}
-
 export const mockConversations: Conversation[] = [
   {
     conversation_id: "1",
@@ -162,20 +135,6 @@ export const mockConversations: Conversation[] = [
     messages: [],
   },
 ];
-
-let currentConversations = [...mockConversations];
-
-export async function updateConversations(
-  newConversations: Conversation[]
-): Promise<void> {
-  console.log("Updating conversations:", newConversations);
-  currentConversations = newConversations;
-}
-
-export async function getAllConversations(): Promise<Conversation[]> {
-  console.log("Getting all conversations:", currentConversations);
-  return currentConversations;
-}
 
 export const mockMessages: Message[] = [
   {
@@ -431,8 +390,3 @@ export const mockMessages: Message[] = [
     timestamp: "2024-08-10T12:17:00Z",
   },
 ];
-
-export async function getAllMessages(): Promise<Message[]> {
-  console.log("Getting all messages:", mockMessages);
-  return mockMessages;
-}

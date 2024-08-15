@@ -1,11 +1,4 @@
-import {
-  Connection,
-  ConnectionsCircle,
-  Conversation,
-  LoggedInUser,
-  Message,
-  User,
-} from ".";
+import { Connection, Conversation, LoggedInUser, Message, User } from ".";
 
 export const mockLoggedInUser: LoggedInUser = {
   id: "current_user",
@@ -13,83 +6,117 @@ export const mockLoggedInUser: LoggedInUser = {
   avatar: "/magdalena.webp",
 };
 
+export async function getLoggedInUser(): Promise<LoggedInUser> {
+  await new Promise((resolve) => setTimeout(resolve, 500));
+  return mockLoggedInUser;
+}
+
+export const mockUsers: User[] = [
+  {
+    id: "100",
+    name: "Anna Kowalska",
+    avatar: "",
+  },
+  {
+    id: "101",
+    name: "Krystyna Kowalska",
+    avatar: "",
+  },
+  {
+    id: "102",
+    name: "Anita Kowalska",
+    avatar: "",
+  },
+  {
+    id: "103",
+    name: "Halina Kowalska",
+    avatar: "",
+  },
+  {
+    id: "104",
+    name: "Magdalena Kowalska",
+    avatar: "",
+  },
+  {
+    id: "105",
+    name: "Aleksandra Kowalska",
+    avatar: "",
+  },
+];
+
+export async function getAllUsers(): Promise<User[]> {
+  await new Promise((resolve) => setTimeout(resolve, 500));
+  return mockUsers;
+}
+
 export const mockConnections: Connection[] = [
   {
     id: "1",
+    userId: "1",
     name: "Ines Acedo Leventopoulou",
-    circle: "friends",
+    circleName: "friends",
     conversationId: "1",
   },
   {
     id: "2",
+    userId: "2",
     name: "Agnese Ventrella",
-    circle: "friends",
+    circleName: "friends",
     conversationId: "2",
   },
   {
     id: "3",
+    userId: "3",
     name: "Monika Adamczyk-Majewska",
-    circle: "friends",
+    circleName: "friends",
     conversationId: "3",
   },
   {
     id: "4",
+    userId: "4",
     name: "Bernadeta Karpińska",
-    circle: "family",
+    circleName: "family",
     conversationId: "4",
   },
   {
     id: "5",
+    userId: "5",
     name: "Krzysztof Karpiński",
-    circle: "family",
+    circleName: "family",
     conversationId: "5",
   },
   {
     id: "6",
+    userId: "6",
     name: "Jonathan Zeray",
-    circle: "acquaintances",
+    circleName: "acquaintances",
     conversationId: "6",
   },
   {
     id: "7",
+    userId: "7",
     name: "Robin Sahin",
-    circle: "acquaintances",
+    circleName: "acquaintances",
     conversationId: "7",
   },
 ];
 
-export const mockUsers: User[] = [
-  {
-    id: "8",
-    name: "RuPaul",
-  },
-  {
-    id: "9",
-    name: "Cordozar Calvin Broadus Jr.",
-  },
-  {
-    id: "10",
-    name: "Paris Hilton",
-  },
-  {
-    id: "11",
-    name: "Trixy Mattel",
-  },
-  {
-    id: "12",
-    name: "Katya Zamolodchikova",
-  },
-  {
-    id: "13",
-    name: "Sasha Velour",
-  },
-];
+let currentConnections = [...mockConnections];
 
-export function getAllUsers(): User[] {
-  return mockUsers;
+export async function updateConnections(
+  newConnections: Connection[]
+): Promise<void> {
+  console.log("Updating connections:", newConnections);
+  currentConnections = newConnections;
 }
 
-export function getAllCircles(): ConnectionsCircle[] {
+export async function getAllConnections(): Promise<Connection[]> {
+  await new Promise((resolve) => setTimeout(resolve, 500));
+  console.log("Getting all connections:", currentConnections);
+  return currentConnections;
+}
+
+export async function getAllCircles(): Promise<string[]> {
   return ["acquaintances", "friends", "family"];
 }
 
@@ -131,257 +158,278 @@ export const mockConversations: Conversation[] = [
   },
 ];
 
+let currentConversations = [...mockConversations];
+
+export async function updateConversations(
+  newConversations: Conversation[]
+): Promise<void> {
+  console.log("Updating conversations:", newConversations);
+  currentConversations = newConversations;
+}
+
+export async function getAllConversations(): Promise<Conversation[]> {
+  await new Promise((resolve) => setTimeout(resolve, 500));
+  console.log("Getting all conversations:", currentConversations);
+  return currentConversations;
+}
+
 export const mockMessages: Message[] = [
   {
-    message_id: "1",
-    conversation_id: "1",
-    sender_name: mockLoggedInUser.name,
+    id: "1",
+    conversationId: "1",
+    senderId: mockLoggedInUser.name,
     text: "How are you?!",
     timestamp: "2024-08-10T12:06:00Z",
   },
   {
-    message_id: "2",
-    conversation_id: "1",
-    sender_name: "Ines Acedo Leventopoulou",
+    id: "2",
+    conversationId: "1",
+    senderId: "Ines Acedo Leventopoulou",
     text: "Hej! What's up?",
     timestamp: "2024-08-10T12:07:00Z",
   },
   {
-    message_id: "3",
-    conversation_id: "1",
-    sender_name: mockLoggedInUser.name,
+    id: "3",
+    conversationId: "1",
+    senderId: mockLoggedInUser.name,
     text: "I'm good, thanks!",
     timestamp: "2024-08-10T12:08:00Z",
   },
   {
-    message_id: "4",
-    conversation_id: "1",
-    sender_name: "Ines Acedo Leventopoulou",
+    id: "4",
+    conversationId: "1",
+    senderId: "Ines Acedo Leventopoulou",
     text: "Great to hear!",
     timestamp: "2024-08-10T12:09:00Z",
   },
   {
-    message_id: "5",
-    conversation_id: "1",
-    sender_name: mockLoggedInUser.name,
+    id: "5",
+    conversationId: "1",
+    senderId: mockLoggedInUser.name,
     text: "How was your day?",
     timestamp: "2024-08-10T12:10:00Z",
   },
   {
-    message_id: "6",
-    conversation_id: "1",
-    sender_name: mockLoggedInUser.name,
+    id: "6",
+    conversationId: "1",
+    senderId: mockLoggedInUser.name,
     text: "It was good, thanks!",
     timestamp: "2024-08-10T12:11:00Z",
   },
   {
-    message_id: "7",
-    conversation_id: "1",
-    sender_name: mockLoggedInUser.name,
+    id: "7",
+    conversationId: "1",
+    senderId: mockLoggedInUser.name,
     text: "What did you do?",
     timestamp: "2024-08-10T12:12:00Z",
   },
   {
-    message_id: "8",
-    conversation_id: "1",
-    sender_name: "Ines Acedo Leventopoulou",
+    id: "8",
+    conversationId: "1",
+    senderId: "Ines Acedo Leventopoulou",
     text: "I went to the park with my dog",
     timestamp: "2024-08-10T12:13:00Z",
   },
   {
-    message_id: "9",
-    conversation_id: "1",
-    sender_name: mockLoggedInUser.name,
+    id: "9",
+    conversationId: "1",
+    senderId: mockLoggedInUser.name,
     text: "That sounds fun!",
     timestamp: "2024-08-10T12:14:00Z",
   },
   {
-    message_id: "10",
-    conversation_id: "1",
-    sender_name: "Ines Acedo Leventopoulou",
+    id: "10",
+    conversationId: "1",
+    senderId: "Ines Acedo Leventopoulou",
     text: "It was!",
     timestamp: "2024-08-10T12:15:00Z",
   },
   {
-    message_id: "11",
-    conversation_id: "1",
-    sender_name: mockLoggedInUser.name,
+    id: "11",
+    conversationId: "1",
+    senderId: mockLoggedInUser.name,
     text: "I have to go now, talk to you later!",
     timestamp: "2024-08-10T12:16:00Z",
   },
   {
-    message_id: "12",
-    conversation_id: "1",
-    sender_name: "Ines Acedo Leventopoulou",
+    id: "12",
+    conversationId: "1",
+    senderId: "Ines Acedo Leventopoulou",
     text: "Bye!",
     timestamp: "2024-08-10T12:17:00Z",
   },
   {
-    message_id: "1",
-    conversation_id: "6",
-    sender_name: mockLoggedInUser.name,
+    id: "1",
+    conversationId: "6",
+    senderId: mockLoggedInUser.name,
     text: "How are you?!",
     timestamp: "2024-08-10T12:06:00Z",
   },
   {
-    message_id: "2",
-    conversation_id: "6",
-    sender_name: "Jonathan Zeray",
+    id: "2",
+    conversationId: "6",
+    senderId: "Jonathan Zeray",
     text: "Hej! What's up?",
     timestamp: "2024-08-10T12:07:00Z",
   },
   {
-    message_id: "3",
-    conversation_id: "6",
-    sender_name: mockLoggedInUser.name,
+    id: "3",
+    conversationId: "6",
+    senderId: mockLoggedInUser.name,
     text: "I'm good, thanks!",
     timestamp: "2024-08-10T12:08:00Z",
   },
   {
-    message_id: "4",
-    conversation_id: "6",
-    sender_name: "Jonathan Zeray",
+    id: "4",
+    conversationId: "6",
+    senderId: "Jonathan Zeray",
     text: "Great to hear!",
     timestamp: "2024-08-10T12:09:00Z",
   },
   {
-    message_id: "5",
-    conversation_id: "6",
-    sender_name: mockLoggedInUser.name,
+    id: "5",
+    conversationId: "6",
+    senderId: mockLoggedInUser.name,
     text: "How was your day?",
     timestamp: "2024-08-10T12:10:00Z",
   },
   {
-    message_id: "6",
-    conversation_id: "6",
-    sender_name: mockLoggedInUser.name,
+    id: "6",
+    conversationId: "6",
+    senderId: mockLoggedInUser.name,
     text: "It was good, thanks!",
     timestamp: "2024-08-10T12:11:00Z",
   },
   {
-    message_id: "7",
-    conversation_id: "6",
-    sender_name: mockLoggedInUser.name,
+    id: "7",
+    conversationId: "6",
+    senderId: mockLoggedInUser.name,
     text: "What did you do?",
     timestamp: "2024-08-10T12:12:00Z",
   },
   {
-    message_id: "8",
-    conversation_id: "6",
-    sender_name: "Jonathan Zeray",
+    id: "8",
+    conversationId: "6",
+    senderId: "Jonathan Zeray",
     text: "I went to the park with my dog",
     timestamp: "2024-08-10T12:13:00Z",
   },
   {
-    message_id: "9",
-    conversation_id: "6",
-    sender_name: mockLoggedInUser.name,
+    id: "9",
+    conversationId: "6",
+    senderId: mockLoggedInUser.name,
     text: "That sounds fun!",
     timestamp: "2024-08-10T12:14:00Z",
   },
   {
-    message_id: "10",
-    conversation_id: "6",
-    sender_name: "Jonathan Zeray",
+    id: "10",
+    conversationId: "6",
+    senderId: "Jonathan Zeray",
     text: "It was!",
     timestamp: "2024-08-10T12:15:00Z",
   },
   {
-    message_id: "11",
-    conversation_id: "6",
-    sender_name: mockLoggedInUser.name,
+    id: "11",
+    conversationId: "6",
+    senderId: mockLoggedInUser.name,
     text: "I have to go now, talk to you later!",
     timestamp: "2024-08-10T12:16:00Z",
   },
   {
-    message_id: "12",
-    conversation_id: "6",
-    sender_name: "Jonathan Zeray",
+    id: "12",
+    conversationId: "6",
+    senderId: "Jonathan Zeray",
     text: "Bye!",
     timestamp: "2024-08-10T12:17:00Z",
   },
   {
-    message_id: "1",
-    conversation_id: "4",
-    sender_name: mockLoggedInUser.name,
+    id: "1",
+    conversationId: "4",
+    senderId: mockLoggedInUser.name,
     text: "How are you?!",
     timestamp: "2024-08-10T12:06:00Z",
   },
   {
-    message_id: "2",
-    conversation_id: "4",
-    sender_name: "Bernadeta Karpińska",
+    id: "2",
+    conversationId: "4",
+    senderId: "Bernadeta Karpińska",
     text: "Hej! What's up?",
     timestamp: "2024-08-10T12:07:00Z",
   },
   {
-    message_id: "3",
-    conversation_id: "4",
-    sender_name: mockLoggedInUser.name,
+    id: "3",
+    conversationId: "4",
+    senderId: mockLoggedInUser.name,
     text: "I'm good, thanks!",
     timestamp: "2024-08-10T12:08:00Z",
   },
   {
-    message_id: "4",
-    conversation_id: "4",
-    sender_name: "Bernadeta Karpińska",
+    id: "4",
+    conversationId: "4",
+    senderId: "Bernadeta Karpińska",
     text: "Great to hear!",
     timestamp: "2024-08-10T12:09:00Z",
   },
   {
-    message_id: "5",
-    conversation_id: "4",
-    sender_name: mockLoggedInUser.name,
+    id: "5",
+    conversationId: "4",
+    senderId: mockLoggedInUser.name,
     text: "How was your day?",
     timestamp: "2024-08-10T12:10:00Z",
   },
   {
-    message_id: "6",
-    conversation_id: "4",
-    sender_name: mockLoggedInUser.name,
+    id: "6",
+    conversationId: "4",
+    senderId: mockLoggedInUser.name,
     text: "It was good, thanks!",
     timestamp: "2024-08-10T12:11:00Z",
   },
   {
-    message_id: "7",
-    conversation_id: "4",
-    sender_name: mockLoggedInUser.name,
+    id: "7",
+    conversationId: "4",
+    senderId: mockLoggedInUser.name,
     text: "What did you do?",
     timestamp: "2024-08-10T12:12:00Z",
   },
   {
-    message_id: "8",
-    conversation_id: "4",
-    sender_name: "Bernadeta Karpińska",
+    id: "8",
+    conversationId: "4",
+    senderId: "Bernadeta Karpińska",
     text: "I went to the park with my dog",
     timestamp: "2024-08-10T12:13:00Z",
   },
   {
-    message_id: "9",
-    conversation_id: "4",
-    sender_name: mockLoggedInUser.name,
+    id: "9",
+    conversationId: "4",
+    senderId: mockLoggedInUser.name,
     text: "That sounds fun!",
     timestamp: "2024-08-10T12:14:00Z",
   },
   {
-    message_id: "10",
-    conversation_id: "4",
-    sender_name: "Bernadeta Karpińska",
+    id: "10",
+    conversationId: "4",
+    senderId: "Bernadeta Karpińska",
     text: "It was!",
     timestamp: "2024-08-10T12:15:00Z",
   },
   {
-    message_id: "11",
-    conversation_id: "4",
-    sender_name: mockLoggedInUser.name,
+    id: "11",
+    conversationId: "4",
+    senderId: mockLoggedInUser.name,
     text: "I have to go now, talk to you later!",
     timestamp: "2024-08-10T12:16:00Z",
   },
   {
-    message_id: "12",
-    conversation_id: "4",
-    sender_name: "Bernadeta Karpińska",
+    id: "12",
+    conversationId: "4",
+    senderId: "Bernadeta Karpińska",
     text: "Bye!",
     timestamp: "2024-08-10T12:17:00Z",
   },
 ];
+
+export async function getAllMessages(): Promise<Message[]> {
+  await new Promise((resolve) => setTimeout(resolve, 500));
+  console.log("Getting all messages:", mockMessages);
+  return mockMessages;
+}

@@ -1,32 +1,48 @@
-import { Connection, LoggedInUser, Message } from "../lib";
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+import { Connection, fetchMessagesById, LoggedInUser, Message } from "../lib";
 import { MyMessage, TheirMessage } from "./message";
 
 export type ConversationProps = {
-  user2: Connection;
-  messages: Message[];
+  user2: Connection | null;
   loggedInUser: LoggedInUser;
-  messagesEndRef?: React.RefObject<HTMLDivElement>;
+  conversationId: string;
 };
 
-export function ConversationComponent({
+export function Conversation({
   user2,
-  messages,
   loggedInUser,
-  messagesEndRef,
+  conversationId,
 }: ConversationProps) {
+  const [messages, setMessages] = useState<Message[]>([]);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    async function loadMessages() {
+      const fetchedMessages = await fetchMessagesById(conversationId);
+      setMessages(fetchedMessages);
+    }
+    loadMessages();
+  }, [conversationId]);
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
   return (
     <div className="w-full space-y-4">
       {messages.map((message) =>
-        message.sender_name === loggedInUser.name ? (
+        message.senderId === loggedInUser.name ? (
           <MyMessage
-            key={message.message_id}
+            key={message.id}
             message={message.text}
             timestamp={message.timestamp}
             loggedInUser={loggedInUser}
           />
         ) : (
           <TheirMessage
-            key={message.message_id}
+            key={message.id}
             message={message.text}
             timestamp={message.timestamp}
             user={user2}

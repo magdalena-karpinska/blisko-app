@@ -1,4 +1,4 @@
-import { CircleCard, IconButton } from "./ui";
+import { CircleCard } from "./ui";
 import Link from "next/link";
 
 export default function Dashboard() {

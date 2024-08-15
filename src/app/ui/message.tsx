@@ -9,7 +9,7 @@ export type MyMessageProps = {
 export type TheirMessageProps = {
   message: string;
   timestamp: string;
-  user: Connection;
+  user: Connection | null;
 };
 
 const circleBgColor = {

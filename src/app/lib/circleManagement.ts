@@ -1,4 +1,4 @@
-import { Message, ConnectionsCircle } from "./definitions";
+import { Message } from "./definitions";
 
 const friendsTreshold = 5;
 const familyTreshold = 15;
@@ -9,7 +9,7 @@ export function countMessagesFromLast24h(messages: Message[]): number {
     .length;
 }
 
-export function attachToCircle(messages: Message[]): ConnectionsCircle {
+export function determineCircle(messages: Message[]): string {
   const amountOfMessagesFromLast24h = countMessagesFromLast24h(messages);
   if (amountOfMessagesFromLast24h > familyTreshold) {
     return "family";

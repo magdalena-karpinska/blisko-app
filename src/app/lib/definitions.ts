@@ -1,15 +1,15 @@
-export type ConnectionsCircle = "family" | "friends" | "acquaintances";
-
 export type Connection = {
   id: string;
+  userId: string;
   name: string;
-  circle: ConnectionsCircle;
+  circleName: string;
   conversationId: string;
 };
 
 export type User = {
   id: string;
   name: string;
+  avatar: string;
 };
 
 export type Conversation = {
@@ -19,9 +19,9 @@ export type Conversation = {
 };
 
 export type Message = {
-  message_id: string;
-  conversation_id: string;
-  sender_name: string;
+  id: string;
+  conversationId: string;
+  senderId: string;
   text: string;
   timestamp: string;
 };
@@ -30,4 +30,13 @@ export type LoggedInUser = {
   id: string;
   name: string;
   avatar: string;
+};
+
+export type EnhancedConnection = {
+  id: string;
+  userId: string;
+  name: string;
+  circleName: string;
+  conversationId: string;
+  messages: Message[];
 };

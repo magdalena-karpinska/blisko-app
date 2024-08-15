@@ -1,4 +1,6 @@
-import { uuid } from "drizzle-orm/pg-core";
+"use server";
+
+import { revalidatePath } from "next/cache";
 import {
   Conversation,
   getAllUsers,
@@ -11,6 +13,8 @@ import {
   updateConnections,
   updateConversations,
   mockMessages,
+  insertMessage,
+  getMessagesByConversationId,
 } from ".";
 import { getAllConversations } from ".";
 
@@ -28,17 +32,7 @@ export async function fetchMessagesById(
   conversationId: string
 ): Promise<Message[]> {
   try {
-    const allMessages = await getAllMessages();
-
-    const conversationMessages = allMessages.filter(
-      (message) => message.conversationId === conversationId
-    );
-
-    const sortedMessages = conversationMessages.sort(
-      (a, b) =>
-        new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()
-    );
-    return sortedMessages;
+    return getMessagesByConversationId(conversationId);
   } catch (error) {
     console.error("Error fetching messages", error);
     return [];
@@ -192,15 +186,14 @@ export async function sendMessage(
   text: string
 ): Promise<any> {
   try {
-    const newMessage: Message = {
-      id: Math.random.toString(),
+    const newMessage: any = {
       senderId: senderId,
       text: text,
       conversationId: conversationId,
-      timestamp: new Date().toISOString(),
     };
-
-    mockMessages.push(newMessage);
+    console.log("Adding new message:", newMessage);
+    await insertMessage(newMessage);
+    revalidatePath(`/conversations/${conversationId}`);
   } catch (error) {
     console.error("Error adding connection", error);
     throw error;

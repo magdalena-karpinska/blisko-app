@@ -8,8 +8,12 @@ interface IconButtonProps
   size?: "sm" | "md" | "lg";
 }
 
-export function PrimaryButton({ children, className, ...rest }: ButtonProps) {
-  return <button className="btn btn-primary">{children}</button>;
+export function PrimaryButton({ children, onClick }: ButtonProps) {
+  return (
+    <button onClick={onClick} className="btn btn-primary">
+      {children}
+    </button>
+  );
 }
 
 export function SecondaryButton({

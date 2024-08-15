@@ -40,7 +40,7 @@ export function MyMessage({
 }
 
 export function TheirMessage({ message, timestamp, user }: TheirMessageProps) {
-  const bgColorClass = circleBgColor[user.circle];
+  const bgColorClass = circleBgColor[user.circleName];
   return (
     <div className="chat chat-start">
       <div className="chat-image avatar">

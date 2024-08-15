@@ -1,3 +1,5 @@
+"use server";
+
 import {
   User,
   Connection,
@@ -12,6 +14,13 @@ import {
   mockConversations,
   mockLoggedInUser,
 } from "./mockData";
+import postgres from "postgres";
+import * as schema from "@/db/schema";
+import { drizzle } from "drizzle-orm/postgres-js";
+
+const client = postgres(process.env.POSTGRES_URL as string);
+
+const db = drizzle(client, { schema });
 
 let currentConnections = [...mockConnections];
 let currentConversations = [...mockConversations];
@@ -53,6 +62,18 @@ export async function getAllConversations(): Promise<Conversation[]> {
 }
 
 export async function getAllMessages(): Promise<Message[]> {
-  console.log("Getting all messages:", mockMessages);
   return mockMessages;
+}
+
+export async function getMessagesByConversationId(
+  conversationId: string
+): Promise<Message[]> {
+  return mockMessages.filter(
+    (message) => message.conversationId === conversationId
+  );
+}
+
+export async function insertMessage(message: any): Promise<void> {
+  await db.insert(schema.messages).values(message);
+  mockMessages.push(message);
 }

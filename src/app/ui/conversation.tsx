@@ -16,28 +16,22 @@ export type ConversationProps = {
   user2: Connection | null;
   loggedInUser: LoggedInUser;
   conversationId: string;
+  messages: Message[];
 };
 
 export function Conversation({
+  messages,
   user2,
   loggedInUser,
   conversationId,
 }: ConversationProps) {
-  const [messages, setMessages] = useState<Message[]>([]);
-  const messagesEndRef = useRef<HTMLDivElement>(null);
   const [inputValue, setInputValue] = useState<string>("");
 
-  useEffect(() => {
-    async function loadMessages() {
-      const fetchedMessages = await fetchMessagesById(conversationId);
-      setMessages(fetchedMessages);
-    }
-    loadMessages();
-  }, [conversationId]);
+  const handleSendMessage = async (text: string) => {
+    console.log("Sending message:", text);
 
-  const handleSendMessage = (text: string) => {
     if (text.trim() !== "") {
-      sendMessage(loggedInUser.id, conversationId, text);
+      await sendMessage(loggedInUser.id, conversationId, text);
       setInputValue("");
     }
   };
@@ -61,7 +55,6 @@ export function Conversation({
           />
         )
       )}
-      <div ref={messagesEndRef} />
       <div className="w-full max-w-2-xl flex space-x-2 ">
         <TextInput
           value={inputValue}
@@ -71,6 +64,8 @@ export function Conversation({
         />
         <PrimaryButton
           onClick={() => {
+            console.log("Sending message:", inputValue);
+
             handleSendMessage(inputValue);
           }}
           className="btn btn-primary"
